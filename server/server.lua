@@ -111,22 +111,45 @@ exports('getLastResult', function(suspectServerId)
     return lastResults[tonumber(suspectServerId)]
 end)
 
--- TEMP testing only - remove before going live
--- Usage: setbac <serverid> <value>   e.g. setbac 1 0.09
+-- Dev Mode Command: Set BAC for testing without drinking alcohol.
+-- Usage: /setbac <serverid> <value>   e.g. /setbac 1 0.09
 RegisterCommand('setbac', function(source, args)
-    if source ~= 0 then return end
+    if not Config.DevMode then
+        if source ~= 0 then
+            TriggerClientEvent('kg-alcolizer:client:notify', source, 'Dev mode is disabled.', 'error')
+        else
+            print('[kg-alcolizer] Dev mode is disabled.')
+        end
+        return
+    end
+
     local targetId = tonumber(args[1])
     local bac      = tonumber(args[2])
+
     if not targetId or not bac then
-        print('[setbac] Usage: setbac <serverid> <value>')
+        if source ~= 0 then
+            TriggerClientEvent('kg-alcolizer:client:notify', source, 'Usage: /setbac <id> <value>', 'info')
+        else
+            print('[kg-alcolizer] Usage: setbac <id> <value>')
+        end
         return
     end
+
     local p = Bridge.GetPlayer(targetId)
     if not p then
-        print('[setbac] Player not found: ' .. tostring(targetId))
+        if source ~= 0 then
+            TriggerClientEvent('kg-alcolizer:client:notify', source, 'Player not found.', 'error')
+        else
+            print('[kg-alcolizer] Player not found: ' .. tostring(targetId))
+        end
         return
     end
+
     p.Functions.SetMetaData('alcohol', bac)
-    local verify = p.PlayerData.metadata.alcohol
-    print('[setbac] Set alcohol=' .. tostring(bac) .. ' on server ID ' .. tostring(targetId) .. ' | read-back: ' .. tostring(verify))
+    
+    if source ~= 0 then
+        TriggerClientEvent('kg-alcolizer:client:notify', source, ('Set BAC for ID %d to %.2f'):format(targetId, bac), 'success')
+    else
+        print(('[kg-alcolizer] Set BAC for ID %d to %.2f'):format(targetId, bac))
+    end
 end, true)

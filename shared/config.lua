@@ -23,6 +23,9 @@ Config.EnableLogging = true
 Config.LogToFile     = false
 Config.LogFilePath   = 'logs/alcolizer.log'
 
+-- Development Mode: If true, the 'setbac' command is enabled for in-game use.
+Config.DevMode = true
+
 -- 'auto' detects qbx_core then qb-core at startup.
 -- Set explicitly to 'qbx' or 'qb' to skip detection.
 Config.Framework = 'auto'
