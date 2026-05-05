@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: transparent;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 100vh;
+    padding: 28px 36px;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#breathalyzer {
+    animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    width: 320px;
+}
+
+#breathalyzer.hiding {
+    animation: slideOut 0.32s ease-in forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(16px); }
+}
+
+.device-wrap {
+    position: relative;
+    width: 320px;
+}
+
+.device-wrap img {
+    width: 100%;
+    display: block;
+    pointer-events: none;
+}
+
+/* Pixel-perfect calibration from alcolizer.png (315x530):
+   green screen: top=68 bottom=134 left=117 right=210 */
+.screen-overlay {
+    position: absolute;
+    top: 12.83%;
+    height: 12.45%;
+    left: 37.14%;
+    right: 33.33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    overflow: hidden;
+    border-radius: 1px;
+    background: transparent;
+}
+
+.bac-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+#bac-value {
+    font-size: 16px;
+    font-weight: 900;
+    color: #003300;
+    letter-spacing: 0.5px;
+    font-family: 'Courier New', monospace;
+    transition: color 0.4s;
+    text-align: right;
+}
+
+
+#bac-value.over  { color: #cc0000; }
+#bac-value.clear { color: #003300; }
+
+.bac-unit {
+    font-size: 5px;
+    font-weight: 700;
+    color: #222;
+    padding-bottom: 1px;
+}
+
+.status-text {
+    font-size: 5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #222;
+    transition: color 0.4s;
+    text-transform: uppercase;
+}
+
+.status-text.over {
+    color: #cc0000;
+    animation: blink 0.8s step-end infinite;
+}
+
+.status-text.clear { color: #003300; }
+
+.screen-suspect {
+    font-size: 4px;
+    color: #222;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.2; }
+}

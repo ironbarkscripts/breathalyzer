@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathalyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="breathalyzer" class="hidden">
+        <div class="device-wrap">
+            <img src="./img/alcolizer.png" draggable="false" alt="" />
+            <div id="screen-overlay" class="screen-overlay">
+                <div class="bac-readout">
+                    <span id="bac-value">0.000</span>
+                    <span class="bac-unit">g/100ml</span>
+                </div>
+                <div id="status-text" class="status-text">READING...</div>
+                <div id="suspect-name" class="screen-suspect"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
