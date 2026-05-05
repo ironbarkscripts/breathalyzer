@@ -3,7 +3,7 @@ game 'gta5'
 
 author      'Ironbark Scripts'
 description 'kg-alcolizer — server-authoritative breathalyser'
-version     '2.1.0'
+version     '2.2.0'
 
 ui_page 'html/index.html'
 

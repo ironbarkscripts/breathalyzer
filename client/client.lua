@@ -110,6 +110,41 @@ end, false)
 
 RegisterKeyMapping('breathalyzer', 'Conduct Breath Test', 'keyboard', 'F7')
 
+-- Dev Mode NPC Testing
+Citizen.CreateThread(function()
+    if not Config.DevMode then return end
+    
+    local models = { "mp_m_freemode_01", "mp_f_freemode_01", "a_m_m_business_01", "a_f_m_business_01" } -- Add more as needed
+    
+    if GetResourceState('ox_target') == 'started' then
+        exports.ox_target:addGlobalPeds({
+            {
+                name = 'breathalyzer_npc_test',
+                icon = 'fas fa-wind',
+                label = 'Breath Test [DEV]',
+                canInteract = function() return Config.DevMode and IsAuthorized() end,
+                onSelect = function(data)
+                    if isTesting then return end
+                    isTesting = true
+                    local completed = RunTestAnimation()
+                    isTesting = false
+                    if completed then
+                        -- Simulate a server result for an NPC
+                        local bac = math.random(0, 250) / 1000 -- 0.000 to 0.250
+                        TriggerEvent('kg-alcolizer:client:receiveResult', {
+                            bac = bac,
+                            legalLimit = Config.LegalLimit,
+                            overLimit = bac > Config.LegalLimit,
+                            suspectName = "[DEV] NPC",
+                            officerName = "Local Officer",
+                        })
+                    end
+                end
+            }
+        })
+    end
+end)
+
 RegisterNetEvent('kg-alcolizer:client:receiveResult', function(result)
     if not result then return end
 

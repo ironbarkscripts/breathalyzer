@@ -74,9 +74,7 @@ RegisterNetEvent('kg-alcolizer:server:requestTest', function(targetId)
     end
 
     local rawAlcohol = suspectPlayer.PlayerData.metadata.alcohol
-    print('[kg-alcolizer] DEBUG suspect ID: ' .. tostring(targetId) .. ' | raw metadata.alcohol: ' .. tostring(rawAlcohol) .. ' | type: ' .. type(rawAlcohol))
-
-    local bac       = tonumber(rawAlcohol) or 0.0
+    local bac        = tonumber(rawAlcohol) or 0.0
     local overLimit = bac > Config.LegalLimit
 
     local officerPlayer = Bridge.GetPlayer(officerId)
